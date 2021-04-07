@@ -13,6 +13,8 @@ Update JuLI
 
 2020.10 V0.1.6.1: changed the errors from compatibility of data.table library.
 
+2021.04 V0.1.6.2: fixed the error appearing while processing split read breakpoints with low mean read mapping quality.
+
 Installing JuLI
 ----------------
 download https://github.com/sgilab/JuLI/raw/master/JuLI-v0.1.6.1.zip
