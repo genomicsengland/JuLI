@@ -1,4 +1,4 @@
-Package: juliv0.1.6.2
+Package: juliv0.1.6
 Title: JuLI (Junction Location Identifier)
 Version:  0.1.6.2
 Authors@R: c(person("Hyun-Tae", "Shin", email = "hyuntae.shin83@gmail.com", role = c("aut", "cre")),person("Nadezda", "Volkova", email = "nadezda.volkova@genomicsengland.co.uk", role = "ctb"))
