@@ -202,8 +202,10 @@ callfusion=function(CaseBam=NULL,
     bed.n=out %>% select(chr,pos) %>% mutate(end=pos) %>% data.table() %>% setkey(chr,pos,end)
     bed=bed %>% mutate(end=pos) %>% select(chr,pos,end,ori,splno) %>% data.table() %>% foverlaps(.,bed.n,type="within") %>% filter(is.na(pos)) %>% select(chr,i.pos,ori,splno) %>% setNames(c('chr','pos','ori','splno'))
 
-    bedLog=logfun(Log,bedLog,bed,4,"Break in the control")
-    bedLog=logfun(Log,bedLog,bed,5,"Break in the control")
+    writeLines(paste0("[",format(Sys.time(),"%Y-%b-%d %H:%M:%S"),"] ","bedLog columns"))
+    # Discordant pair log
+    bedLog=logfun(Log,bedLog,bed,"DiscordantPairLog","Break in the control")
+    bedLog=logfun(Log,bedLog,bed,"ProperPairLog","Break in the control")
   }
 
   if(!isEmpty(ControlPanel)){
@@ -214,8 +216,9 @@ callfusion=function(CaseBam=NULL,
     bed.n=ConPanbed %>% select(chr,pos) %>% mutate(end=pos) %>% data.table() %>% setkey(chr,pos,end)
     bed=bed %>% mutate(end=pos) %>% select(chr,pos,end,ori,splno) %>% data.table() %>% foverlaps(.,bed.n,type="within") %>% filter(is.na(pos)) %>% select(chr,i.pos,ori,splno) %>% setNames(c('chr','pos','ori','splno'))
 
-    bedLog=logfun(Log,bedLog,bed,4,"Break in the control panel")
-    bedLog=logfun(Log,bedLog,bed,5,"Break in the control panel")
+    writeLines(paste0("[",format(Sys.time(),"%Y-%b-%d %H:%M:%S"),"] ","Filtering breaks in control panel"))
+    bedLog=logfun(Log,bedLog,bed,"DiscordantPairLog","Break in the control panel")
+    bedLog=logfun(Log,bedLog,bed,"ProperPairLog","Break in the control panel")
   }
 
   bedD=bed
@@ -340,7 +343,7 @@ callfusion=function(CaseBam=NULL,
 
     bedD=bedDdisno %>% select(chr,pos,ori,splno,disno,qnames)
 
-    bedLog=logfun(Log,bedLog,bedD,4,"Reads count under the cutoff")
+    bedLog=logfun(Log,bedLog,bedD,"DiscordantPairLog","Reads count under the cutoff")
   }
 
   if(nrow(bedD)!= 0){
@@ -406,7 +409,7 @@ callfusion=function(CaseBam=NULL,
       nucdiv_cutoff=ifelse(sum(bedD$nucdiv_mbase!=0)>=2,mean(bedD$nucdiv_mbase[bedD$nucdiv_mbase!=0])+2*sd(bedD$nucdiv_mbase[bedD$nucdiv_mbase!=0]),0)
       bedD=bedD %>% filter((nucdiv_scbase <= nucdiv_cutoff | is.na(nucdiv_scbase)) & (nucdiv_mbase <= nucdiv_cutoff))
 
-      bedLog=logfun(Log,bedLog,bedD,4,"Break with high nucleotide diversity")
+      bedLog=logfun(Log,bedLog,bedD,"DiscordantPairLog","Break with high nucleotide diversity")
     }
     bedD=bedD %>% select(chr,pos,ori,splno,disno,seq,qnames,MeanMapq)
   }
@@ -601,7 +604,7 @@ callfusion=function(CaseBam=NULL,
       bed_D=bed_D[,-6] %>% unique()
     }
 
-    bedLog=logfun(Log,bedLog,bed_D,4,"Unmatched contig sequences")
+    bedLog=logfun(Log,bedLog,bed_D,"DiscordantPairLog","Unmatched contig sequences")
   }
 
 
@@ -671,7 +674,7 @@ callfusion=function(CaseBam=NULL,
 
     bedP=bedPsplno %>% select(chr,pos,ori,splno,disno)
 
-    bedLog=logfun(Log,bedLog,bedP,5,"Reads count under the cutoff")
+    bedLog=logfun(Log,bedLog,bedP,"ProperPairLog","Reads count under the cutoff")
   }
 
   if(nrow(bedP)!= 0){
@@ -735,7 +738,7 @@ callfusion=function(CaseBam=NULL,
       nucdiv_cutoff=ifelse(sum(bedP$nucdiv_mbase!=0)>=2,mean(bedP$nucdiv_mbase[bedP$nucdiv_mbase!=0])+2*sd(bedP$nucdiv_mbase[bedP$nucdiv_mbase!=0]),0)
       tbed=bedP %>% filter(nucdiv_scbase <= nucdiv_cutoff & nucdiv_mbase <= nucdiv_cutoff)
 
-      bedLog=logfun(Log,bedLog,tbed,5,"Break with high nucleotide diversity")
+      bedLog=logfun(Log,bedLog,tbed,"ProperPairLog","Break with high nucleotide diversity")
     }else{
       tbed=bedP
     }
@@ -791,7 +794,7 @@ callfusion=function(CaseBam=NULL,
         bed_P[[c]]=bed_tmp %>% setNames(c("chr","pos","ori","splno","disno","part"))
       }
       bed_P=rbindlist(bed_P)
-      bedLog=logfun(Log,bedLog,bed_P,5,"Unmatched contig sequences")
+      bedLog=logfun(Log,bedLog,bed_P,"ProperPairLog","Unmatched contig sequences")
     }
   }
 

@@ -1,6 +1,6 @@
-Package: juliv0.1.6.1
+Package: juliv0.1.6.2
 Title: JuLI (Junction Location Identifier)
-Version:  0.1.6.1
+Version:  0.1.6.2
 Authors@R: person("Hyun-Tae", "Shin", email = "hyuntae.shin83@gmail.com", role = c("aut", "cre"))
 Description: DNA fusion detection algorithm for clinical sequencing.
 Depends: R (>= 3.3.1),Rsamtools,data.table,doMC,dplyr,Biostrings,ggplot2
