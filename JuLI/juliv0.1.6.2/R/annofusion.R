@@ -25,7 +25,7 @@ annofusion=function(Output=NULL,
       MessageFun(3)
     }else{
       if(!isEmpty(Refgene) & !isEmpty(Cosmic) & !isEmpty(Pfam) & !isEmpty(Uniprot)){
-        ref= fread(Refgene,showProgress = F) %>% setNames(paste0('V',c(1:ncol(.))))
+        ref= fread(Refgene,showProgress = F, fill=T) %>% setNames(paste0('V',c(1:ncol(.))))
         cos=read.table(Cosmic,sep='\t',stringsAsFactors = F,header=T, fill=T)
         pfam=read.table(Pfam,sep='\t',stringsAsFactors = F,fill=T, comment.char = "%")
         gpmap=read.table(Uniprot,sep='\t',stringsAsFactors = F,fill=T,header=T,quote = "")

@@ -43,7 +43,7 @@ callfusion=function(CaseBam=NULL,
   mat["A","A"]=mat["C","C"]=mat["G","G"]=mat["T","T"]=1
 
   if(isEmpty(Refgene)|isEmpty(Gap)){MessageFun(2)}
-  ref <<- fread(Refgene,showProgress = F) %>% setNames(paste0('V',c(1:ncol(.))))
+  ref <<- fread(Refgene,showProgress = F, fill = TRUE) %>% setNames(paste0('V',c(1:ncol(.))))
   GapData <<- fread(Gap,showProgress = F) %>% .[,c(2,3,4)] %>% setNames(c('chr','str','end'))
   if(isEmpty(Reference)){MessageFun(6)}
   in.fa <<- FaFile(Reference)
@@ -579,7 +579,7 @@ callfusion=function(CaseBam=NULL,
           }
         }
         if(all(outtb$MeanMapq < 1)){
-          outtb=NULL
+          outtb=data.table(matrix(ncol=6))[0,]
         }
         outtb
       } %>% rbindlist()
