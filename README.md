@@ -15,6 +15,8 @@ Update JuLI
 
 2021.04 V0.1.6.2: fixed the error appearing while processing split read breakpoints with low mean read mapping quality.
 
+2021.09 V0.1.6.2: adjusting for use with Docker
+
 Installing JuLI
 ----------------
 download https://github.com/sgilab/JuLI/raw/master/JuLI-v0.1.6.1.zip
